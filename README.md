@@ -88,3 +88,8 @@ Project setup completed successfully.
 ## Week 2 Progress
 
 During Week 2, we implemented the core bot functionality. We improved Telegram commands, added income and expense tracking, saved and loaded user data using JSON files, and created the balance calculation system.
+
+
+## Week 3 Progress
+
+During Week 3, we developed expense categories, added filtering and search functions, generated weekly and monthly reports, and created expense charts using Matplotlib.
