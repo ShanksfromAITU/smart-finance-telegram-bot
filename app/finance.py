@@ -14,6 +14,9 @@ class FinanceManager:
         description: str,
         transaction_type: str,
     ):
+        if amount <= 0:
+            raise ValueError("Amount must be greater than zero.")
+
         data = self.storage.load_data()
         user_key = str(user_id)
 
@@ -46,12 +49,14 @@ class FinanceManager:
 
     def get_balance(self, user_id: int) -> float:
         transactions = self.get_transactions(user_id)
-        balance = 0
+        balance = 0.0
 
         for transaction in transactions:
+            amount = float(transaction["amount"])
+
             if transaction["transaction_type"] == "income":
-                balance += transaction["amount"]
+                balance += amount
             elif transaction["transaction_type"] == "expense":
-                balance -= transaction["amount"]
+                balance -= amount
 
         return balance

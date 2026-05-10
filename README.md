@@ -83,3 +83,8 @@ During Week 1, we created the project structure, connected the Telegram bot, imp
 ## Week 1 Updates
 
 Project setup completed successfully.
+
+
+## Week 2 Progress
+
+During Week 2, we implemented the core bot functionality. We improved Telegram commands, added income and expense tracking, saved and loaded user data using JSON files, and created the balance calculation system.
