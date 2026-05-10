@@ -79,3 +79,7 @@ python bot.py
 ## Week 1 Progress
 
 During Week 1, we created the project structure, connected the Telegram bot, implemented the main classes, added JSON storage, and created basic commands for income, expense, and balance.
+
+## Week 1 Updates
+
+Project setup completed successfully.
