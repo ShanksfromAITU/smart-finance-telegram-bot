@@ -442,4 +442,62 @@ The bot can now:
 - Search using regex
 - Export data to CSV
 
-Week 5 will focus on testing, debugging, final documentation, and project demonstration.
+
+## Week 5 – Testing and Finalization
+
+In Week 5, we tested and finalized the Smart Finance Telegram Bot.
+
+Completed tasks:
+
+- Improved Telegram bot UI messages
+- Added emoji icons to bot responses
+- Improved help menu readability
+- Improved success and error messages
+- Added unit tests for FinanceManager
+- Tested adding income
+- Tested adding expenses
+- Tested balance calculation
+- Tested expense categories
+- Tested search and filtering
+- Tested weekly reports
+- Tested spending limits and warnings
+- Tested regex search
+- Tested CSV export
+- Performed final debugging
+- Prepared final demonstration commands
+- Updated project documentation
+
+### Unit Testing
+
+We created unit tests in:
+
+```text
+tests/test_finance.py
+
+The tests check the main finance logic of the project.
+
+Tested functions include:
+
+add_transaction()
+get_balance()
+get_expense_categories_summary()
+search_transactions()
+filter_by_category()
+get_report()
+set_spending_limit()
+get_spending_limits()
+check_spending_limit()
+regex_search_transactions()
+export_to_csv()
+
+Tests were run using:
+
+python -m unittest discover tests
+
+The tests passed successfully.
+
+Telegram Bot UI Improvements
+
+Since the project is a Telegram bot, the user interface is implemented through Telegram commands and bot responses.
+
+In Week 5, we improved the Telegram UI by adding emoji icons, clearer formatting, KZT currency labels, better success messages, and more understandable error messages.

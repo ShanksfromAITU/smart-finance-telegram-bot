@@ -13,40 +13,39 @@ finance_manager = FinanceManager()
 
 def get_help_text() -> str:
     return (
-        "Smart Finance Bot Commands:\n\n"
-        "/start - start the bot\n"
-        "/help - show command list\n"
-        "/income amount category description - add income\n"
-        "/expense amount category description - add expense\n"
-        "/balance - show current balance\n"
-        "/categories - show expense categories summary\n"
-        "/search keyword - search transactions\n"
-        "/filter category - filter transactions by category\n"
-        "/report week - show weekly report\n"
-        "/report month - show monthly report\n"
-        "/chart - create expense chart\n"
-        "/limit category amount - set spending limit\n"
-        "/limits - show spending limits\n"
-        "/regex pattern - search transactions using regex\n"
-        "/export - export transactions to CSV\n\n"
+        "🤖 Smart Finance Bot Commands\n\n"
+        "🚀 /start - start the bot\n"
+        "ℹ️ /help - show command list\n"
+        "💵 /income [amount] [category] [description] - add income\n"
+        "💸 /expense [amount] [category] [description] - add expense\n"
+        "💰 /balance - show current balance\n"
+        "📂 /categories - show expense categories summary\n"
+        "🔎 /search [keyword] - search transactions\n"
+        "🏷 /filter [category] - filter transactions by category\n"
+        "📊 /report [week/month] - show financial report\n"
+        "📈 /chart - create expense chart\n"
+        "⚠️ /limit [category] [amount] - set spending limit\n"
+        "📌 /limits - show spending limits\n"
+        "🧩 /regex [pattern] - search transactions using regex\n"
+        "📤 /export - export transactions to CSV\n\n"
         "Examples:\n"
-        "/income 10000 salary scholarship\n"
-        "/expense 1500 food lunch\n"
-        "/search lunch\n"
-        "/filter food\n"
-        "/report week\n"
-        "/chart\n"
-        "/limit food 5000\n"
-        "/limits\n"
-        "/regex lunch|coffee\n"
-        "/export"
+        "💵 /income 10000 salary scholarship\n"
+        "💸 /expense 1500 food lunch\n"
+        "🔎 /search lunch\n"
+        "🏷 /filter food\n"
+        "📊 /report week\n"
+        "📈 /chart\n"
+        "⚠️ /limit food 5000\n"
+        "📌 /limits\n"
+        "🧩 /regex lunch|coffee\n"
+        "📤 /export"
     )
 
 
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     await update.message.reply_text(
-        "Welcome to Smart Finance Bot!\n\n"
-        "This bot helps you track your income and expenses.\n\n"
+        "👋 Welcome to Smart Finance Bot!\n\n"
+        "This bot helps you track your income, expenses, balance, reports, charts, and spending limits.\n\n"
         + get_help_text()
     )
 
@@ -73,11 +72,11 @@ async def income(update: Update, context: ContextTypes.DEFAULT_TYPE):
         )
 
         await update.message.reply_text(
-            "Income added successfully!\n\n"
-            "Amount: {}\n"
-            "Category: {}\n"
-            "Description: {}\n"
-            "Date: {}".format(
+            "✅ Income added successfully!\n\n"
+            "💵 Amount: {} KZT\n"
+            "📂 Category: {}\n"
+            "📝 Description: {}\n"
+            "📅 Date: {}".format(
                 transaction.amount,
                 transaction.category,
                 transaction.description,
@@ -87,17 +86,19 @@ async def income(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
     except IndexError:
         await update.message.reply_text(
-            "Wrong command format.\n\n"
+            "❌ Wrong command format.\n\n"
             "Use:\n"
-            "/income amount category description\n\n"
+            "/income [amount] [category] [description]\n\n"
             "Example:\n"
             "/income 10000 salary scholarship"
         )
 
     except ValueError:
         await update.message.reply_text(
-            "Invalid amount.\n\n"
+            "❌ Invalid amount.\n\n"
             "Amount must be a positive number.\n\n"
+            "Use:\n"
+            "/income [amount] [category] [description]\n\n"
             "Example:\n"
             "/income 10000 salary scholarship"
         )
@@ -126,11 +127,11 @@ async def expense(update: Update, context: ContextTypes.DEFAULT_TYPE):
         )
 
         message = (
-            "Expense added successfully!\n\n"
-            "Amount: {}\n"
-            "Category: {}\n"
-            "Description: {}\n"
-            "Date: {}".format(
+            "✅ Expense added successfully!\n\n"
+            "💸 Amount: {} KZT\n"
+            "📂 Category: {}\n"
+            "📝 Description: {}\n"
+            "📅 Date: {}".format(
                 transaction.amount,
                 transaction.category,
                 transaction.description,
@@ -139,23 +140,25 @@ async def expense(update: Update, context: ContextTypes.DEFAULT_TYPE):
         )
 
         if warning:
-            message += "\n\n" + warning
+            message += "\n\n⚠️ " + warning
 
         await update.message.reply_text(message)
 
     except IndexError:
         await update.message.reply_text(
-            "Wrong command format.\n\n"
+            "❌ Wrong command format.\n\n"
             "Use:\n"
-            "/expense amount category description\n\n"
+            "/expense [amount] [category] [description]\n\n"
             "Example:\n"
             "/expense 1500 food lunch"
         )
 
     except ValueError:
         await update.message.reply_text(
-            "Invalid amount.\n\n"
+            "❌ Invalid amount.\n\n"
             "Amount must be a positive number.\n\n"
+            "Use:\n"
+            "/expense [amount] [category] [description]\n\n"
             "Example:\n"
             "/expense 1500 food lunch"
         )
@@ -166,7 +169,8 @@ async def balance(update: Update, context: ContextTypes.DEFAULT_TYPE):
     current_balance = finance_manager.get_balance(user_id)
 
     await update.message.reply_text(
-        "Your current balance is: {}".format(current_balance)
+        "💰 Your current balance\n\n"
+        "Balance: {} KZT".format(current_balance)
     )
 
 
@@ -175,13 +179,13 @@ async def categories(update: Update, context: ContextTypes.DEFAULT_TYPE):
     summary = finance_manager.get_expense_categories_summary(user_id)
 
     if not summary:
-        await update.message.reply_text("No expense categories found.")
+        await update.message.reply_text("📂 No expense categories found.")
         return
 
-    message = "Expense categories summary:\n\n"
+    message = "📂 Expense categories summary:\n\n"
 
     for category, amount in summary.items():
-        message += "{}: {}\n".format(category, amount)
+        message += "• {}: {} KZT\n".format(category, amount)
 
     await update.message.reply_text(message)
 
@@ -189,9 +193,9 @@ async def categories(update: Update, context: ContextTypes.DEFAULT_TYPE):
 async def search(update: Update, context: ContextTypes.DEFAULT_TYPE):
     if not context.args:
         await update.message.reply_text(
-            "Wrong command format.\n\n"
+            "❌ Wrong command format.\n\n"
             "Use:\n"
-            "/search keyword\n\n"
+            "/search [keyword]\n\n"
             "Example:\n"
             "/search lunch"
         )
@@ -203,15 +207,15 @@ async def search(update: Update, context: ContextTypes.DEFAULT_TYPE):
     results = finance_manager.search_transactions(user_id, keyword)
 
     if not results:
-        await update.message.reply_text("No transactions found.")
+        await update.message.reply_text("🔎 No transactions found.")
         return
 
-    message = "Search results for '{}':\n\n".format(keyword)
+    message = "🔎 Search results for '{}':\n\n".format(keyword)
 
     for transaction in results:
         sign = "+" if transaction["transaction_type"] == "income" else "-"
 
-        message += "{}{} | {} | {} | {}\n".format(
+        message += "{}{} KZT | {} | {} | {}\n".format(
             sign,
             transaction["amount"],
             transaction["category"],
@@ -225,9 +229,9 @@ async def search(update: Update, context: ContextTypes.DEFAULT_TYPE):
 async def filter_category(update: Update, context: ContextTypes.DEFAULT_TYPE):
     if not context.args:
         await update.message.reply_text(
-            "Wrong command format.\n\n"
+            "❌ Wrong command format.\n\n"
             "Use:\n"
-            "/filter category\n\n"
+            "/filter [category]\n\n"
             "Example:\n"
             "/filter food"
         )
@@ -239,15 +243,15 @@ async def filter_category(update: Update, context: ContextTypes.DEFAULT_TYPE):
     results = finance_manager.filter_by_category(user_id, category)
 
     if not results:
-        await update.message.reply_text("No transactions found for this category.")
+        await update.message.reply_text("🏷 No transactions found for this category.")
         return
 
-    message = "Transactions in category '{}':\n\n".format(category)
+    message = "🏷 Transactions in category '{}':\n\n".format(category)
 
     for transaction in results:
         sign = "+" if transaction["transaction_type"] == "income" else "-"
 
-        message += "{}{} | {} | {}\n".format(
+        message += "{}{} KZT | {} | {}\n".format(
             sign,
             transaction["amount"],
             transaction["description"],
@@ -270,11 +274,11 @@ async def report(update: Update, context: ContextTypes.DEFAULT_TYPE):
         )
 
         await update.message.reply_text(
-            "{} report:\n\n"
-            "Total income: {}\n"
-            "Total expense: {}\n"
-            "Balance: {}\n"
-            "Transactions count: {}".format(
+            "📊 {} report\n\n"
+            "💵 Total income: {} KZT\n"
+            "💸 Total expense: {} KZT\n"
+            "💰 Balance: {} KZT\n"
+            "🔢 Transactions count: {}".format(
                 period.capitalize(),
                 report_data["total_income"],
                 report_data["total_expense"],
@@ -285,10 +289,11 @@ async def report(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
     except ValueError:
         await update.message.reply_text(
-            "Wrong command format.\n\n"
+            "❌ Wrong command format.\n\n"
             "Use:\n"
+            "/report [week/month]\n\n"
+            "Examples:\n"
             "/report week\n"
-            "or\n"
             "/report month"
         )
 
@@ -298,7 +303,7 @@ async def chart(update: Update, context: ContextTypes.DEFAULT_TYPE):
     summary = finance_manager.get_expense_categories_summary(user_id)
 
     if not summary:
-        await update.message.reply_text("No expense data for chart.")
+        await update.message.reply_text("📈 No expense data for chart.")
         return
 
     os.makedirs("data/charts", exist_ok=True)
@@ -336,24 +341,26 @@ async def limit(update: Update, context: ContextTypes.DEFAULT_TYPE):
         )
 
         await update.message.reply_text(
-            "Spending limit set successfully!\n\n"
-            "Category: {}\n"
-            "Limit: {}".format(category, amount)
+            "✅ Spending limit set successfully!\n\n"
+            "📂 Category: {}\n"
+            "⚠️ Limit: {} KZT".format(category, amount)
         )
 
     except IndexError:
         await update.message.reply_text(
-            "Wrong command format.\n\n"
+            "❌ Wrong command format.\n\n"
             "Use:\n"
-            "/limit category amount\n\n"
+            "/limit [category] [amount]\n\n"
             "Example:\n"
             "/limit food 5000"
         )
 
     except ValueError:
         await update.message.reply_text(
-            "Invalid limit amount.\n\n"
+            "❌ Invalid limit amount.\n\n"
             "Amount must be a positive number.\n\n"
+            "Use:\n"
+            "/limit [category] [amount]\n\n"
             "Example:\n"
             "/limit food 5000"
         )
@@ -364,13 +371,13 @@ async def limits(update: Update, context: ContextTypes.DEFAULT_TYPE):
     user_limits = finance_manager.get_spending_limits(user_id)
 
     if not user_limits:
-        await update.message.reply_text("No spending limits found.")
+        await update.message.reply_text("📌 No spending limits found.")
         return
 
-    message = "Your spending limits:\n\n"
+    message = "📌 Your spending limits:\n\n"
 
     for category, amount in user_limits.items():
-        message += "{}: {}\n".format(category, amount)
+        message += "• {}: {} KZT\n".format(category, amount)
 
     await update.message.reply_text(message)
 
@@ -386,15 +393,15 @@ async def regex_search(update: Update, context: ContextTypes.DEFAULT_TYPE):
         results = finance_manager.regex_search_transactions(user_id, pattern)
 
         if not results:
-            await update.message.reply_text("No transactions found.")
+            await update.message.reply_text("🧩 No transactions found.")
             return
 
-        message = "Regex search results for '{}':\n\n".format(pattern)
+        message = "🧩 Regex search results for '{}':\n\n".format(pattern)
 
         for transaction in results:
             sign = "+" if transaction["transaction_type"] == "income" else "-"
 
-            message += "{}{} | {} | {} | {}\n".format(
+            message += "{}{} KZT | {} | {} | {}\n".format(
                 sign,
                 transaction["amount"],
                 transaction["category"],
@@ -406,16 +413,18 @@ async def regex_search(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
     except IndexError:
         await update.message.reply_text(
-            "Wrong command format.\n\n"
+            "❌ Wrong command format.\n\n"
             "Use:\n"
-            "/regex pattern\n\n"
+            "/regex [pattern]\n\n"
             "Example:\n"
             "/regex lunch|coffee"
         )
 
     except ValueError:
         await update.message.reply_text(
-            "Invalid regex pattern.\n\n"
+            "❌ Invalid regex pattern.\n\n"
+            "Use:\n"
+            "/regex [pattern]\n\n"
             "Example:\n"
             "/regex lunch|coffee"
         )
@@ -426,11 +435,13 @@ async def export(update: Update, context: ContextTypes.DEFAULT_TYPE):
         user_id = update.effective_user.id
         file_path = finance_manager.export_to_csv(user_id)
 
+        await update.message.reply_text("📤 CSV export created successfully!")
+
         with open(file_path, "rb") as document:
             await update.message.reply_document(document=document)
 
     except ValueError:
-        await update.message.reply_text("No transactions to export.")
+        await update.message.reply_text("📤 No transactions to export.")
 
 
 def main():
@@ -446,7 +457,6 @@ def main():
     app.add_handler(CommandHandler("filter", filter_category))
     app.add_handler(CommandHandler("report", report))
     app.add_handler(CommandHandler("chart", chart))
-
     app.add_handler(CommandHandler("limit", limit))
     app.add_handler(CommandHandler("limits", limits))
     app.add_handler(CommandHandler("regex", regex_search))
